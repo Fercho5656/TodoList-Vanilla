@@ -27,10 +27,64 @@ h1.center {
   text-align: center;
 }
 
+#todoInput {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+}
+
+#todoInput::placeholder {
+  color: var(--secondary-color);
+}
+
+#todoInput:focus {
+  border: none;
+  outline: none;
+}
+
+#todoSelect {
+  text-transform: capitalize;
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+}
+
+#todoSelect option {
+  text-transform: capitalize;
+  color: var(--secondary-color);
+}
+
+#todoSelect option:disabled {
+  color: #fff;
+  text-decoration: line-through;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
 #todoList {
   display: flex;
   flex-flow: column;
 }
+
+
 
 .crossed {
   text-decoration: line-through;

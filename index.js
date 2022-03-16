@@ -1,11 +1,10 @@
 import {
   createSelectOption,
   createList,
-  removeElements
-} from './createElements.js'
+  createListItem
+} from '.scripts/createElements.js'
 
 const $ = e => document.querySelector(e)
-const $$ = e => document.querySelectorAll(e)
 
 const todoInput = $('#todoInput')
 const todoSelect = $('#todoSelect')
@@ -19,27 +18,41 @@ const todoCategories = {
 }
 
 Object.keys(todoCategories).forEach(category => {
-  const capitalLetter =
-    category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
-  const option = createSelectOption(category, capitalLetter)
+  const option = createSelectOption(category, category)
   todoSelect.appendChild(option)
+  const listTitle = category.charAt(0).toUpperCase() + category.slice(1)
+  const list = createList(listTitle, todoCategories[category])
+  todoList.appendChild(list)
 })
 
-const renderLists = () => {
-  Object.keys(todoCategories).forEach(category => {
-    const list = createList(category, todoCategories[category])
-    todoList.appendChild(list)
-  })
-}
-renderLists()
-
 addTodoBtn.addEventListener('click', () => {
-  if (todoInput.value.trim() === '') return alert('Please enter a todo')
+  const { value } = todoInput
+  const { value: categorySelect } = todoSelect
+  const category = todoCategories[categorySelect]
+  if (categorySelect === 'Category') return alert('Select a category')
 
-  if (todoSelect.value === 'Category') return alert('Please select a category')
+  const listItem = createListItem(value)
+  const deleteButton = document.createElement('button')
+  deleteButton.textContent = '❌'
 
-  todoCategories[todoSelect.value].push(todoInput.value)
-  todoInput.value = ''
-  removeElements($$('#todoList ul'))
-  renderLists()
+  deleteButton.addEventListener('click', () => {
+    if (confirm('Are you sure?')) {
+      listItem.remove()
+
+      // Removes item from array
+      category.splice(category.indexOf(value), 1)
+    }
+  })
+
+  listItem.addEventListener('click', () => {
+    listItem.classList.toggle('crossed')
+    Object.values(category).forEach(item => {
+      if (item.todo === value) item.completed = !item.completed
+    })
+  })
+  category.push({ todo: value, completed: false })
+  const list = $(`#${categorySelect}`)
+
+  listItem.appendChild(deleteButton)
+  list.appendChild(listItem)
 })

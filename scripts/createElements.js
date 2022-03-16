@@ -1,5 +1,3 @@
-const toggleCrossed = item => item.classList.toggle('crossed')
-
 export const createHeader = title => {
   const header = document.createElement('h2')
   header.textContent = title
@@ -13,10 +11,11 @@ export const createSelectOption = (value, text) => {
   return option
 }
 
-const createListItem = text => {
+export const createListItem = text => {
   const listItem = document.createElement('li')
-  listItem.textContent = text
-  listItem.addEventListener('click', () => toggleCrossed(listItem))
+  const textItem = document.createElement('p')
+  textItem.textContent = text
+  listItem.appendChild(textItem)
   return listItem
 }
 
@@ -34,5 +33,3 @@ export const createList = (title, content) => {
   }
   return list
 }
-
-export const removeElements = elements => elements.forEach(e => e.remove())

@@ -115,6 +115,10 @@ li {
   align-items: center;
 }
 
+li > p {
+  font-size: 1.5rem;
+}
+
 .btn-delete {
   margin: 0;
   padding: 0;

@@ -13,9 +13,6 @@ export const createSelectOption = (value, text) => {
 
 export const createListItem = text => {
   const listItem = document.createElement('li')
-  const textItem = document.createElement('p')
-  textItem.textContent = text
-  listItem.appendChild(textItem)
   return listItem
 }
 

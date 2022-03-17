@@ -9,20 +9,22 @@
   </head>
 
   <body>
-    <h1 class="center">To Do List</h1>
-    <div class="addTodo">
-      <input
-        id="todoInput"
-        type="text"
-        required
-        placeholder="Insert todo here..."
-      />
-      <select required name="todoSelect" id="todoSelect">
-        <option disabled selected>Category</option>
-      </select>
-      <button class="btn" id="addTodoBtn">Add to list</button>
-    </div>
-    <div id="todoList"></div>
+    <main class="container">
+      <h1 class="center">To Do List</h1>
+      <div class="addTodo">
+        <input
+          id="todoInput"
+          type="text"
+          required
+          placeholder="Insert todo here..."
+        />
+        <select required name="todoSelect" id="todoSelect">
+          <option disabled selected>Category</option>
+        </select>
+        <button class="btn" id="addTodoBtn">Add to list</button>
+      </div>
+      <div id="todoList"></div>
+    </main>
     <script src="./index.js" type="module"></script>
   </body>
 </html>

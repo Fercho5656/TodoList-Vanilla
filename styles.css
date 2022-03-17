@@ -116,6 +116,7 @@ li {
 }
 
 li > p {
+  cursor: pointer;
   font-size: 1.5rem;
 }
 

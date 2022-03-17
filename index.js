@@ -1,8 +1,9 @@
 import {
   createSelectOption,
   createList,
-  createListItem
-} from '.scripts/createElements.js'
+  createListItem,
+  createParagraph
+} from './scripts/createElements.js'
 
 const $ = e => document.querySelector(e)
 
@@ -20,8 +21,7 @@ const todoCategories = {
 Object.keys(todoCategories).forEach(category => {
   const option = createSelectOption(category, category)
   todoSelect.appendChild(option)
-  const listTitle = category.charAt(0).toUpperCase() + category.slice(1)
-  const list = createList(listTitle, todoCategories[category])
+  const list = createList(category, todoCategories[category])
   todoList.appendChild(list)
 })
 
@@ -31,9 +31,12 @@ addTodoBtn.addEventListener('click', () => {
   const category = todoCategories[categorySelect]
   if (categorySelect === 'Category') return alert('Select a category')
 
-  const listItem = createListItem(value)
+  const listItem = createListItem()
+  const text = createParagraph(value)
+
   const deleteButton = document.createElement('button')
   deleteButton.textContent = '❌'
+  deleteButton.className = 'btn btn-delete'
 
   deleteButton.addEventListener('click', () => {
     if (confirm('Are you sure?')) {
@@ -45,7 +48,7 @@ addTodoBtn.addEventListener('click', () => {
   })
 
   listItem.addEventListener('click', () => {
-    listItem.classList.toggle('crossed')
+    text.classList.toggle('crossed')
     Object.values(category).forEach(item => {
       if (item.todo === value) item.completed = !item.completed
     })
@@ -53,6 +56,7 @@ addTodoBtn.addEventListener('click', () => {
   category.push({ todo: value, completed: false })
   const list = $(`#${categorySelect}`)
 
+  listItem.appendChild(text)
   listItem.appendChild(deleteButton)
   list.appendChild(listItem)
 })

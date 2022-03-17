@@ -4,6 +4,12 @@ export const createHeader = title => {
   return header
 }
 
+export const createParagraph = text => {
+  const paragraph = document.createElement('p')
+  paragraph.textContent = text
+  return paragraph
+}
+
 export const createSelectOption = (value, text) => {
   const option = document.createElement('option')
   option.value = value
@@ -11,7 +17,7 @@ export const createSelectOption = (value, text) => {
   return option
 }
 
-export const createListItem = text => {
+export const createListItem = () => {
   const listItem = document.createElement('li')
   return listItem
 }

@@ -18,11 +18,13 @@ const todoCategories = {
   exams: []
 }
 
-Object.keys(todoCategories).forEach(category => {
-  const option = createSelectOption(category, category)
-  todoSelect.appendChild(option)
-  const list = createList(category, todoCategories[category])
-  todoList.appendChild(list)
+window.addEventListener('load', () => {
+  Object.keys(todoCategories).forEach(category => {
+    const option = createSelectOption(category, category)
+    todoSelect.appendChild(option)
+    const list = createList(category, todoCategories[category])
+    todoList.appendChild(list)
+  })
 })
 
 addTodoBtn.addEventListener('click', () => {
@@ -30,6 +32,7 @@ addTodoBtn.addEventListener('click', () => {
   const { value: categorySelect } = todoSelect
   const category = todoCategories[categorySelect]
   if (categorySelect === 'Category') return alert('Select a category')
+  if (value.trim() === '') return
 
   const listItem = createListItem()
   const text = createParagraph(value)
@@ -47,13 +50,14 @@ addTodoBtn.addEventListener('click', () => {
     }
   })
 
-  listItem.addEventListener('click', () => {
+  text.addEventListener('click', () => {
     text.classList.toggle('crossed')
     Object.values(category).forEach(item => {
       if (item.todo === value) item.completed = !item.completed
     })
   })
   category.push({ todo: value, completed: false })
+  todoInput.value = ''
   const list = $(`#${categorySelect}`)
 
   listItem.appendChild(text)

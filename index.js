@@ -35,16 +35,17 @@ window.addEventListener('load', () => {
 })
 
 addTodoBtn.addEventListener('click', () => {
-  const value = autoParse(todoInput.value)
-  console.log(value)
-  const category = todoCategories[typeof value]
-  if (typeof value === 'string') if (value.trim() === '') return
+  const { value } = todoInput
+  const typeofInput = autoParse(value)
+  console.log(typeofInput)
+  const category = todoCategories[typeofInput]
+  if (typeofInput.trim() === '') return
 
   const listItem = createTodoItem(value, category)
 
   category.push({ todo: value, completed: false })
   todoInput.value = ''
-  const list = $(`#${typeof value}`)
+  const list = $(`#${typeofInput}`)
 
   list.appendChild(listItem)
   saveTodos(todoCategories)
@@ -91,9 +92,8 @@ function createTodoItem (text, category) {
 }
 
 function autoParse (value) {
-  if (value === 'true') return true
-  if (value === 'false') return false
-  if (value === '') return ''
-  if (Number.isNaN(Number(value))) return value
-  return Number(value)
+  if (['true', 'false'].includes(value.toLowerCase())) return 'boolean'
+  if (value.match(/^[0-9]+$/)) return 'int'
+  if (value.match(/^[0-9]+\.[0-9]+$/)) return 'float'
+  return 'string'
 }

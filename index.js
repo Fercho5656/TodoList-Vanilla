@@ -10,20 +10,18 @@ import { loadTodos, saveTodos } from './scripts/state.js'
 const $ = e => document.querySelector(e)
 
 const todoInput = $('#todoInput')
-const todoSelect = $('#todoSelect')
 const addTodoBtn = $('#addTodoBtn')
 const todoList = $('#todoList')
 
 const todoCategories = JSON.parse(loadTodos()) || {
-  pending: [],
-  work: [],
-  exams: []
+  string: [],
+  boolean: [],
+  int: [],
+  float: []
 }
 
 window.addEventListener('load', () => {
   Object.keys(todoCategories).forEach(category => {
-    const option = createSelectOption(category, category)
-    todoSelect.appendChild(option)
     const list = createList(category, todoCategories[category])
 
     // Fills every list
@@ -37,17 +35,16 @@ window.addEventListener('load', () => {
 })
 
 addTodoBtn.addEventListener('click', () => {
-  const { value } = todoInput
-  const { value: categorySelect } = todoSelect
-  const category = todoCategories[categorySelect]
-  if (categorySelect === 'Category') return alert('Select a category')
-  if (value.trim() === '') return
+  const value = autoParse(todoInput.value)
+  console.log(value)
+  const category = todoCategories[typeof value]
+  if (typeof value === 'string') if (value.trim() === '') return
 
   const listItem = createTodoItem(value, category)
 
   category.push({ todo: value, completed: false })
   todoInput.value = ''
-  const list = $(`#${categorySelect}`)
+  const list = $(`#${typeof value}`)
 
   list.appendChild(listItem)
   saveTodos(todoCategories)
@@ -91,4 +88,12 @@ function createTodoItem (text, category) {
   listItem.appendChild(deleteButton)
 
   return listItem
+}
+
+function autoParse (value) {
+  if (value === 'true') return true
+  if (value === 'false') return false
+  if (value === '') return ''
+  if (Number.isNaN(Number(value))) return value
+  return Number(value)
 }
